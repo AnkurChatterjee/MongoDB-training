@@ -1,0 +1,127 @@
+create table dept(
+dept_id int,
+dept_name varchar(100),
+primary key(dept_id)
+);
+
+create table student (
+roll_no int,
+name varchar(50),
+age int,
+class varchar(50),
+dept_id int,
+primary key(roll_no),
+foreign key(dept_id) references dept(dept_id)
+);
+
+insert into dept(dept_id,dept_name) values(1,'Comp');
+insert into dept(dept_id,dept_name) values(2, 'IT');
+insert into dept(dept_id,dept_name) values(3, 'EXTC');
+
+insert into student(roll_no,name,age,class,dept_id) values(1,'Raj',19,'A',1);
+insert into student(roll_no,name,age,class,dept_id) values(2,'Rajesh',21,'B',1);
+insert into student(roll_no,name,age,class,dept_id) values(3,'Sameer',19,'A',2);
+insert into student(roll_no,name,age,class,dept_id) values(4,'Arnab',18,'B',2);
+insert into student(roll_no,name,age,class,dept_id) values(5,'Raju',18,'B',null);
+
+name, roll_no, dept_name
+Join means getting data from two related tables.
+
+First Join type - Inner Join
+
+Inner join will get those records which are present in both tables(intersection of two tables)
+
+select * from dept d, student s where d.dept_id = s.dept_id;
+select s.name,s.roll_no,d.dept_name from dept d, student s where d.dept_id = s.dept_id;
+select * from dept d, student s where d.dept_id = s.dept_id;
+
+Left Join-
+select s.name,s.roll_no,d.dept_name from dept d left join student s on d.dept_id = s.dept_id;
+
+All the entries from dept will come and only the matching entries from student will come
+
+Right Join -
+select s.name,s.roll_no,d.dept_name from dept d right join student s on d.dept_id = s.dept_id;
+All the entries from student will come and only the matching entries from dept will come.
+
+Full Outer Join -
+select s.name,s.roll_no,d.dept_name from dept d left join student s on d.dept_id = s.dept_id union
+select s.name,s.roll_no,d.dept_name from dept d right join student s on d.dept_id = s.dept_id;
+
+In full outer join, data from both the tables will come. Wherever there are no matches, null will come
+
+
+Aggregate Queries - 
+1) get dept name and count of students
+
+select d.dept_name, count(s.name) from dept d, student s where d.dept_id = s.dept_id group by d.dept_name;
+
+2) max
+
+select max(dept_id) from dept;
+select * from student where age in (select max(age) from student);
+select * from student where age = (select max(age) from student);
+
+3) group by
+
+select dept_name, name from dept d, student s where d.dept_id = s.dept_id;
+select dept_name, max(age) from dept d, student s where d.dept_id = s.dept_id group by dept_name;
+select max(age) from dept d, student s where d.dept_id = s.dept_id;
+
+Delete a record -
+delete from student where roll_no=5;
+
+Update a record - 
+update student set age=23 where roll_no = 1;
+
+
+What is a database ?
+
+Database is a collection of logically related data.
+RDBMS is a database in which data is arranged in the form of tables. Tables will have rows and columns. Rows are also known as tuples. Columns are also known as attributes.
+
+Type of columns -
+i) Primary Key - It can be a single key or a combination of keys which can uniquely identify instances. If it's a combination, it is known as composite key.
+ii) Foreign Key - Foreign keys are used for maintaining relationships between other tables. Relationship between tables are of following types -
+				a) One to many or many to one - for example, one dept can consist of many employees. You can also say that many employees belong to a dept.
+					As a rule, the relationship(foreign key) is always stored on the many side.
+				b) Many to many - Eg, many employees can work on many projects. In mnay to many relationship, a new table is created which will hold the relationship.
+							(It will store the foreign keys of both the related tables)
+				c) One to one - A single person can have only one unique Aadhar card. You can store the relationship in any side.
+
+Designing a database table is known as 
+
+Activity - Design database for your college.
+
+Student Table-
+
+Roll_no		Name		Age		Dept_id		Active
+
+Dept Table-
+
+Dept_id		Dept_name
+
+Course Table-
+
+Course_id		Course_name			Semister
+
+Teacher Table-
+
+Teacher_id		Teacher_name
+
+Student_Course_Teacher Table-
+
+Roll_no	Teacher_id		Course_id		Year		Month
+
+Exam Table-
+
+Exam_id		Exam_name		Exam_month		Exam_year		Course_id
+
+Student_exam table -
+
+Roll_no		Exam_id		Marks_obtained		Marks_total
+
+Placement Table -
+
+Placement_id		Roll_no		Company_name		Package	Year
+
