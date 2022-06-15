@@ -27,6 +27,16 @@ app.get('/student',(request,response) => {
       })
       
 })
+app.get('/studentQuery',(request,response) => {
+  connection.query('SELECT * from student where roll_no=?', [request.query.roll_no], (err, rows, fields) => {
+      if (err) throw err
+      let result = {}
+      result ['columns'] = fields;
+      result['data'] = rows;
+      response.json(result);
+    })
+    
+})
 app.get('/dept',(request,response) => {
   connection.query('SELECT * from dept', (err, rows, fields) => {
       if (err) throw err
