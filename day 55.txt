@@ -1,0 +1,9 @@
+Fetch - Javascript provides a way to make AJAX calls with the help of fetch command. Fetch command makes use of promises. The syntax is -
+
+fetch(url).then().then()
+
+Cors - cross browser origin request. To enable better security, browsers block request to some other domain from a current domain.
+To enable cross domain communication Access-Control-Allow-Origin: needs to be enabled. Only when this header is present, will browsers allow cross domain.
+
+How to enable cors in express - To enable cors in express, we have to make use of the cors module. Post creating the object of cors, we can enable express to use it with the help of
+app.use.
