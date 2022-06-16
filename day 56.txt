@@ -1,5 +1,16 @@
 CRUD API's - Create Retrieve Update Delete
 
 Database - create implies insert, retrieve means select, update means update and delete means deleting the data.
+
 Router - Router in express provides the flexibility of mapping url methods to the corresponding javascript file. The advantage it gives is better maintainablity of code, 
 clear seggregation of responsiblities and easy to read code.
+
+Lets have a url - localhost:1991/id=10&name=John&Joseph
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255) DEFAULT 'Sandnes'
+);
