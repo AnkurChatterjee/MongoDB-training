@@ -24,7 +24,7 @@ router.post('/', (request,response) => {
 })
 router.put('/', (request,response) => {
     let sql = "update course set course_name = ?, semister = ? where course_id = ?"
-    connection.query(sql, [request.body.course_name,request.body.semister,request.body.dept_id], (err,rows) => {
+    connection.query(sql, [request.body.course_name,request.body.semister,request.body.course_id], (err,rows) => {
         if(err) throw err;
         let result = {"success": true, "data": rows};
         return response.json(result);
