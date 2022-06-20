@@ -1,0 +1,17 @@
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use college
+switched to db college
+> db.student.insert({name:"Raj",roll_no:1})
+WriteResult({ "nInserted" : 1 })
+> show collections
+student
+> db.student.find()
+{ "_id" : ObjectId("62b0799c3b93765447c80fc9"), "name" : "Raj", "roll_no" : 1 }
+> db.dept.insert({dept_name: "Comp",dept_id: 1})
+WriteResult({ "nInserted" : 1 })
+> show collections
+dept
+student
