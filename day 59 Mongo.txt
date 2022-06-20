@@ -15,3 +15,81 @@ WriteResult({ "nInserted" : 1 })
 > show collections
 dept
 student
+
+db.student.insert({
+... regNo: "3014",
+... name: "Test Student",
+... course: {
+... courseName: "MCA",
+... duration: "3 Years"
+... },
+... address: {
+... city: "Bangalore",
+... state: "KA",
+... country: "India"
+... }
+... })
+WriteResult({ "nInserted" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("62b0799c3b93765447c80fc9"), "name" : "Raj", "roll_no" : 1 }
+{ "_id" : ObjectId("62b0808e3b93765447c80fcb"), "regNo" : "3014", "name" : "Test Student", "course" : { "courseName" : "MCA", "duration" : "3 Years" }, "address" : { "city" : "Bangalore", "state" : "KA", "country" : "India" } }
+> db.student.insert({
+... regNo: "3014",
+... name: "Test Student",
+... course: {
+... courseName: "MCA",
+... duration: "3 Years"
+... },
+... address: {
+... city: "Bangalore",
+... state: "KA",
+... country: "India"
+... }
+... })
+WriteResult({ "nInserted" : 1 })
+> db.student.update({'regNo':'3014'},{$set:{'name':'Virat'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("62b0799c3b93765447c80fc9"), "name" : "Raj", "roll_no" : 1 }
+{ "_id" : ObjectId("62b0808e3b93765447c80fcb"), "regNo" : "3014", "name" : "Virat", "course" : { "courseName" : "MCA", "duration" : "3 Years" }, "address" : { "city" : "Bangalore", "state" : "KA", "country" : "India" } }
+{ "_id" : ObjectId("62b080d93b93765447c80fcc"), "regNo" : "3014", "name" : "Test Student", "course" : { "courseName" : "MCA", "duration" : "3 Years" }, "address" : { "city" : "Bangalore", "state" : "KA", "country" : "India" } }
+> db.student.update({'regNo':'3014'},{$set:{'name':'Virat1'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("62b0799c3b93765447c80fc9"), "name" : "Raj", "roll_no" : 1 }
+{ "_id" : ObjectId("62b0808e3b93765447c80fcb"), "regNo" : "3014", "name" : "Virat1", "course" : { "courseName" : "MCA", "duration" : "3 Years" }, "address" : { "city" : "Bangalore", "state" : "KA", "country" : "India" } }
+{ "_id" : ObjectId("62b080d93b93765447c80fcc"), "regNo" : "3014", "name" : "Test Student", "course" : { "courseName" : "MCA", "duration" : "3 Years" }, "address" : { "city" : "Bangalore", "state" : "KA", "country" : "India" } }
+> db.student.remove({'name':"Raj"})
+WriteResult({ "nRemoved" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("62b0808e3b93765447c80fcb"), "regNo" : "3014", "name" : "Virat1", "course" : { "courseName" : "MCA", "duration" : "3 Years" }, "address" : { "city" : "Bangalore", "state" : "KA", "country" : "India" } }
+{ "_id" : ObjectId("62b080d93b93765447c80fcc"), "regNo" : "3014", "name" : "Test Student", "course" : { "courseName" : "MCA", "duration" : "3 Years" }, "address" : { "city" : "Bangalore", "state" : "KA", "country" : "India" } }
+> db.student.find().pretty()
+{
+        "_id" : ObjectId("62b0808e3b93765447c80fcb"),
+        "regNo" : "3014",
+        "name" : "Virat1",
+        "course" : {
+                "courseName" : "MCA",
+                "duration" : "3 Years"
+        },
+        "address" : {
+                "city" : "Bangalore",
+                "state" : "KA",
+                "country" : "India"
+        }
+}
+{
+        "_id" : ObjectId("62b080d93b93765447c80fcc"),
+        "regNo" : "3014",
+        "name" : "Test Student",
+        "course" : {
+                "courseName" : "MCA",
+                "duration" : "3 Years"
+        },
+        "address" : {
+                "city" : "Bangalore",
+                "state" : "KA",
+                "country" : "India"
+        }
+}
