@@ -1,0 +1,2 @@
+ db.student.find({age:21})
+{ "_id" : ObjectId("62b0a0d490ec5c75579f6a94"), "name" : "Raj", "roll_no" : 30, "age" : 21 }
