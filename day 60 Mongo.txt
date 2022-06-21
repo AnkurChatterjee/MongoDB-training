@@ -1,2 +1,114 @@
  db.student.find({age:21})
 { "_id" : ObjectId("62b0a0d490ec5c75579f6a94"), "name" : "Raj", "roll_no" : 30, "age" : 21 }
+
+
+db.user.insert({
+ "empId" : "1",
+ "type" : "WebUser",
+ "city" : "Pune"
+})
+db.user.insert({
+ "empId" : "2",
+ "type" : "Admin",
+ "city" : "Mumbai"
+})
+db.user.insertMany([{
+ "empId" : "3",
+ "type" : "Admin",
+ "city" : "Pune"
+},
+{
+ "empId" : "4",
+ "type" : "User",
+ "city" : "Mumbai"
+}])
+
+
+db.user.find({
+    "type" : { "$in": ["WebUser", "User"] },
+    "city" : { "$in": ["Pune", "Mumbai"] }
+})
+
+$ symbol stands for projection.
+$in is used to check for matches within a given array.
+
+$eq matches the value that are equal to specified value. Eg- db.user.find({empId:"1"}) this could also be written as db.user.find({empId: {$eq: "1"}})
+
+Embedded Records-
+
+db.myitems.insertMany([{ _id: 1, item: { name: "ab", code: "123" }, qty: 15, tags: [ "A", "B", "C" ] },
+{ _id: 2, item: { name: "cd", code: "123" }, qty: 20, tags: [ "B" ] },
+{ _id: 3, item: { name: "ij", code: "456" }, qty: 25, tags: [ "A", "B" ] },
+{ _id: 4, item: { name: "xy", code: "456" }, qty: 30, tags: [ "B", "A" ] },
+{ _id: 5, item: { name: "mn", code: "000" }, qty: 20, tags: [ [ "A", "B" ], "C" ] }])
+
+db.myitems.find({"item.name":"ab"})
+
+Note: For nested properties, you must use double quotes.
+
+db.myitems.find({tags: "B"}) - wherever B is present in the tag, that came out as output
+
+db.myitems.find({tags: [ "A", "B" ]}) - checks and finds the entire array, sequence of elements will affect the output.
+
+db.myitems.find({"item.name":"ab"},{_id:0}) - Within find, we can declare a second curly bracket where we can specify the fields with value 0 
+to indicate that they are not required in the output.
+
+db.myitems.find({"item.name":/^c/},{_id:0}) - This query will get only those records where item.name starts with c. /^c/ is the regular expression 
+for "starts with c".
+
+db.myitems.find({"item.name":/d$/},{_id:0}) - This query will get only those records where item.name ends with d. /d$/ is the regular expression 
+for "ends with d".
+
+db.myitems.find({"item.name":/.*c.*/},{_id:0}) - This query will get only those records where item.name contains with c. /.*c.*/ is the regular expression 
+for "contains c".
+
+db.myitems.find({"item.name":/^cd$/},{_id:0}) - This query will get only those records where item.name starts with c and ends with d. /^cd$/ is the regular expression 
+for "starts with c and ends with d".
+
+db.inventory.insertMany( [
+   {
+      "item": "nuts", "quantity": 30,
+      "carrier": { "name": "Shipit", "fee": 3 }
+   },
+   {
+      "item": "bolts", "quantity": 50,
+      "carrier": { "name": "Shipit", "fee": 4 }
+   },
+   {
+      "item": "washers", "quantity": 10,
+      "carrier": { "name": "Shipit", "fee": 1 }
+   }
+] )
+
+db.inventory.find( { quantity: { $gt: 20 } } ) - This will get all the data, where quantity is greater than 20.
+
+db.inventory.find( { quantity: { $gte: 30 } } ) - This will get all the data, where quantity is greater than or equal to 30.
+
+In the same way, $lt is less than and $lte will be less than or equal to and $ne will be not equal to.
+
+db.inventory.find({"carrier.fee": {$gt :1}}) - To query on nested.
+
+How to use & operator -
+
+db.user.find({$and: [
+    {"type" : { "$in": ["WebUser"] }},
+    {"city" : { "$in": ["Pune"] }}
+]}) - type must be Webuser AND city must be Pune
+
+db.user.find({$or: [{"type" : { "$in": ["WebUser"] }},{"city" : { "$in": ["Pune"] }} ]}).pretty() - type must be Webuser or City must be Pune
+
+db.user.find({$nor: [{"type" : { "$in": ["WebUser"] }},{"city" : { "$in": ["Pune"] }} ]}).pretty() - returns all the records that fails to match both the given criteria.
+
+Since Mongo is schemaless, so some fields might not exist. If we want to select only those records where a particular field exists and a given condition matches, use -
+db.inventory.find( { quantity: { $exists: true, $nin: [ 5, 15 ] } } ) - $nin stands for "not in" just the opposite of $in
+
+$size - this operator can be used on array fields only to check whether the given criteria on size is satisfied.
+
+db.myitems.find({tags: {$size:2}})
+
+
+
+
+
+
+
