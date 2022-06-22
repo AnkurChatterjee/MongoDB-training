@@ -115,8 +115,17 @@ Questions-
 4) get authors and number of books written by them
 
 
+1) db.books.find({},{_id:0,title:1})
+2) db.books.aggregate({$group: {_id: null, totalpages: {$sum: "$pageCount"}}}) - the above example shows how to add an entire column.
+3) db.books.aggregate([
+  { $unwind : '$categories' },
+  { $group : { _id : '$categories', categorycount : { $sum: 1 } } },
+]).pretty()
 
-
+4) db.books.aggregate([
+  { $unwind: '$authors' },
+  { $group: {_id: '$authors', bookcount: {$sum: 1}}},
+]).pretty()
 
 
 
