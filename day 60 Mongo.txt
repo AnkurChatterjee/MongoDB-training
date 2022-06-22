@@ -99,12 +99,17 @@ db.user.find({$or: [{"type" : { "$in": ["WebUser"] }},{"city" : { "$in": ["Pune"
 
 db.user.find({$nor: [{"type" : { "$in": ["WebUser"] }},{"city" : { "$in": ["Pune"] }} ]}).pretty() - returns all the records that fails to match both the given criteria.
 
-Since Mongo is schemaless, so some fields might not exist. If we want to select only those records where a particular field exists and a given condition matches, use -
+Since Mongo is schema less, so some fields might not exist. If we want to select only those records where a particular field exists and a given condition matches, use -
 db.inventory.find( { quantity: { $exists: true, $nin: [ 5, 15 ] } } ) - $nin stands for "not in" just the opposite of $in
 
 $size - this operator can be used on array fields only to check whether the given criteria on size is satisfied.
-
 db.myitems.find({tags: {$size:2}})
+
+db.courses.insertMany([{title: "MongoDB Overview"},
+{title: "NoSQL Overview"},
+{title: "Mongo Overview"}])
+
+db.courses.find({},{"title":1,_id:0}).sort({"title":-1}) - This will print the details in descending order of title.
 
 
 
